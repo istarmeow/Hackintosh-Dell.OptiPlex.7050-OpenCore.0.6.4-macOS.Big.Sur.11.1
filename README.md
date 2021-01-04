@@ -66,5 +66,4 @@
 #### 修复声卡驱动
 [Fixing audio with AppleALC官方文档](https://dortania.github.io/OpenCore-Post-Install/universal/audio.html)
 
-##### 确认内核扩展
-终端中输入 `kextstat | grep -E "AppleHDA|AppleALC|Lilu"`，确认三个是否都出现，否则无法正常打补丁。主要不要添加其他声卡驱动，否则将与AppleALC冲突。
+**希望得到声卡修复的帮助**
