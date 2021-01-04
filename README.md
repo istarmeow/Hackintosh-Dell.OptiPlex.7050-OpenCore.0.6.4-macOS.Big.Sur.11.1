@@ -68,19 +68,3 @@
 
 ##### 确认内核扩展
 终端中输入 `kextstat | grep -E "AppleHDA|AppleALC|Lilu"`，确认三个是否都出现，否则无法正常打补丁。主要不要添加其他声卡驱动，否则将与AppleALC冲突。
-
-##### 确定声卡型号查找布局ID
-对于Realtek的声卡，一般都是以ALC开头的，例如 `ALC255/ALC3234`，通过 [声卡驱动支持的硬件型号与ID](https://github.com/acidanthera/AppleALC/wiki/Supported-codecs) 查到修订和布局为`	layout 3, 11, 13, 15, 17, 18, 21, 27, 28, 30, 31, 99`
-
-`ALC280`：`layout 3, 4, 11, 13, 15, 16, 21`
-
-##### 启动参数测试声卡ID
-在`boot-args`中添加`alcid=xx`，重启，如果不起作用，再尝试其他声卡ID
-
-##### 修复声卡补丁
-打开Hackintool工具
-
-- PCIe -> Audio device，复制后面的设备地址 `PciRoot(0x0)/Pci(0x1F,0x3)`
-- 计算机 -> 在10进制输入声卡ID，转换为16进制，；例如11，转换后为`B`，那么`alcid=11`将转换后`alc-layout-id`：Data `0B000000`
-
-最终值应总共为4个字节（即`0B 00 00 00`），因为声卡ID超过255（`FF 00 00 00`）将需要记住这些字节已转换。所以256将变成`FF 01 00 00`
